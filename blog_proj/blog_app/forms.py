@@ -6,7 +6,7 @@ class CustomUserCreationForm(UserCreationForm):
 
     class Meta(UserCreationForm.Meta):
         model = get_user_model()
-        fiels = ('username', 'email')
+        fields = ('username', 'email')
 
 class CustomUserChangeForm(UserChangeForm):
     
