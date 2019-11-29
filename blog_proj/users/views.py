@@ -6,6 +6,7 @@ def register(request):
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
+            form.save()
             username = form.cleaned_data.get('usename')
             return redirect('blog-home')
     else:
