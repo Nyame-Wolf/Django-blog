@@ -8,8 +8,8 @@ def register(request):
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             form.save()
-            username = form.cleaned_data.get('usename')
-            messages.success(request, f'Your Account has been successfully created')
+            username = form.cleaned_data.get('username')
+            messages.success(request, f'Account created for {username}')
             return redirect('blog-home')
     else:
         form = CustomUserCreationForm()
