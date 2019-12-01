@@ -1,6 +1,7 @@
 from django.shortcuts import render,redirect
 from blog_app.forms import CustomUserCreationForm
 from django.contrib import messages 
+from django.contrib.auth.decorators  import login_required
 
 
 def register(request):
@@ -15,5 +16,6 @@ def register(request):
         form = CustomUserCreationForm()
     return render(request, 'users/register.html', {'form': form})
 
+@login_required
 def profile(request):
     return render(request, 'users/profile.html',)

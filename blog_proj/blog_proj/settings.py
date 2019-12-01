@@ -127,3 +127,5 @@ AUTH_USER_MODEL = 'blog_app.CustomUser'
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 LOGIN_REDIRECT_URL = 'blog-home'
+
+LOGIN_URL = 'login'
