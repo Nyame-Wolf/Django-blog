@@ -46,6 +46,7 @@ class PostUpdateView(LoginRequiredMixin,UserPassesTestMixin,UpdateView):
 
 class PostDeleteView(LoginRequiredMixin,UserPassesTestMixin,DeleteView):
     model = Post
+    success_url = '/'
     
     def form_valid(self,form):
         form.instance.author = self.request.user
