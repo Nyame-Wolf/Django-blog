@@ -133,4 +133,4 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4' # Ensures we use bootstrap4. the default is 
 
 LOGIN_REDIRECT_URL = 'blog-home'# redirects users to homepage on login instea of django default-to their profile.
 
-LOGIN_URL = 'login'
+LOGIN_URL = 'login' # this tells django where to redirect a user who tries to access a profile page and is not logged in.
