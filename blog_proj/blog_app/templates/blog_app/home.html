@@ -2,13 +2,13 @@
 {% block content %}
 {% for post in posts  %}
     <article class="media content-section">
-    <img src="{{ post.author.profile.image.url }}" alt="dp" class="rounded-circle account-img">
+    <img src="{{ post.author.profile.image.url }}" alt="dp" class="rounded-circle account-img"><!--to authors add dp image alongside post-->
         <div class="media-body">
             <div class="article-metadata">
                 <a class="mr-2" href="#">{{ post.author }}</a>
-                <small class="text-muted">{{ post.date_posted|date:"F d, Y" }}</small>
+                <small class="text-muted">{{ post.date_posted|date:"F d, Y" }}</small><!--use template filters from django doc to display date in format I want-->
             </div>
-            <h2><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h2>
+            <h2><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h2> <!-- makes title of each post a link to its detail page-->
             <p class="article-content">{{ post.content }}</p>
         </div>
     </article>

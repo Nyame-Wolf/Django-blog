@@ -1,12 +1,15 @@
+<!--This template conforms to django CBV defaults interms of template naming and also using `object` instead of post-->
+<!--copy home.html...remove for loop and refactor accodingly.-->
 {% extends "blog_app/base.html" %}
 {% block content %}
 
     <article class="media content-section">
-    <img src="{{ object.author.profile.image.url }}" alt="dp" class="rounded-circle account-img">
+    <img src="{{ object.author.profile.image.url }}" alt="dp" class="rounded-circle account-img"><!--to authors add dp image alongside post-->
         <div class="media-body">
             <div class="article-metadata">
                 <a class="mr-2" href="#">{{ object.author }}</a>
-                <small class="text-muted">{{ object.date_posted|date:"F d, Y" }}</small>
+                <small class="text-muted">{{ object.date_posted|date:"F d, Y" }}</small><!--use template filters from django doc to display date in format I want-->
+                <!--to add links(buttons) to delete and update individual posts -->>
                 {% if object.author == user %}
                     <a href="{% url 'post-update' object.id %}" class="btn btn-secondary btn-sm mt-1 mb-1">Update</a>
                     <a href="{% url 'post-delete' object.id %}" class="btn btn-danger bt-sm mt-1 mb-1">Delete</a>

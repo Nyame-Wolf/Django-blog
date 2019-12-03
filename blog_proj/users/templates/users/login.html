@@ -1,9 +1,10 @@
+<!--in settings.py,  we redirect users to homepage on login instead of django default to their profile by adding LOGIN_REDIRECT_URL = 'blog-home'-->
 {% extends 'blog_app/base.html' %}
-{% load crispy_forms_tags %}
+{% load crispy_forms_tags %}<!--enables us use bootstrap through crispy -->
 {% block content%}
   <div class="content-section">
       <form method="POST">
-          {% csrf_token %}
+          {% csrf_token %}<!--must be added to protect the form from csrf attacks-->
           <fieldset class="form-group">
               <legend class="border-bottom mb-4">Login</legend>
               {{ form|crispy }}
@@ -12,6 +13,7 @@
               <button class="btn btn-outline-info" type="submit">Sign In</button>
           </div>
       </form>
+      <!--Adds that part in a login page that redirects users to register page-->
       <div class="border-top pt-3">
           <small class="text-muted">
               Don't have an account? <a href="{% url 'register' %}" class="ml-2">Sign Up</a>

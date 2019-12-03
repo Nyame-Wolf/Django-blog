@@ -1,3 +1,4 @@
+<!--This template conforms to django CBV defaults interms of template naming and also using `object` instead of post-->
 {% extends 'blog_app/base.html' %}
 {% block content%}
 <div class="content-section">
@@ -9,7 +10,7 @@
         </fieldset>
         <div class="form-group">
                 <button class="btn btn-outline-danger" type="submit">Yes Delete</button>
-                <a href="{% url 'post-detail' object.id %}" class="btn btn-outline-secondary">Cancel</a>
+                <a href="{% url 'post-detail' object.id %}" class="btn btn-outline-secondary">Cancel</a> <!--redirects to a post detail page if we cancel deletion-->
         </div>
     </form>
 </div>

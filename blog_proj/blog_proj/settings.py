@@ -31,9 +31,9 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'crispy_forms',
-    'users.apps.UsersConfig',
-    'blog_app.apps.BlogAppConfig',
+    'crispy_forms', # loads crispy forms
+    'users.apps.UsersConfig', # loads the users app.
+    'blog_app.apps.BlogAppConfig', # loads the blog_app app.
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -122,14 +122,15 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-MEDIA_ROOT = os.path.join(BASE_DIR,'media')
+MEDIA_ROOT = os.path.join(BASE_DIR,'media') #from django docs- handling of static files in development
 
-MEDIA_URL = '/media/'
+MEDIA_URL = '/media/'#from django docs- handling of static files in development
+# Above two automatically create a media dir where all pics are saved. The upload_to folder created in the models.py is saved inside this media folder. A default.jpg if present should be aded manually inside the media dir
 
-AUTH_USER_MODEL = 'blog_app.CustomUser'
+AUTH_USER_MODEL = 'blog_app.CustomUser' # We must add this for the custom user to become usable
 
-CRISPY_TEMPLATE_PACK = 'bootstrap4'
+CRISPY_TEMPLATE_PACK = 'bootstrap4' # Ensures we use bootstrap4. the default is bootstrap2
 
-LOGIN_REDIRECT_URL = 'blog-home'
+LOGIN_REDIRECT_URL = 'blog-home'# redirects users to homepage on login instea of django default-to their profile.
 
 LOGIN_URL = 'login'

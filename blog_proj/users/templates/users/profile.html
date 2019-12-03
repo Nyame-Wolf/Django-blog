@@ -1,5 +1,5 @@
 {% extends 'blog_app/base.html' %}
-{% load crispy_forms_tags %}
+{% load crispy_forms_tags %}<!--enables us use bootstrap through crispy -->
 {% block content%}
   <div class="content-section">
       <div class="media">
@@ -9,10 +9,11 @@
               <p class="text-secondary">{{ user.email }}</p>
           </div>
       </div>
-      <form method="POST" enctype="multipart/form-data">
+      <form method="POST" enctype="multipart/form-data"><!--enctype ensures that images are saved in the background-->
         {% csrf_token %}
         <fieldset class="form-group">
             <legend class="border-bottom mb-4">Profile Info</legend>
+            <!--Adds both profile and user update forms such that they appear on the same page-->
             {{ u_form|crispy }}
             {{ p_form|crispy }}
   

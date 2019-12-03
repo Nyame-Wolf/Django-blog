@@ -1,3 +1,4 @@
+#This forms are used in updating the user and a user's profile.
 from django import forms
 from django.contrib.auth import get_user_model
 from .models import Profile
