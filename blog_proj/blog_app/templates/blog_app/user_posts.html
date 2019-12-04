@@ -1,0 +1,50 @@
+<!--we copy home.html and refactor-->
+{% extends "blog_app/base.html" %}
+{% block content %}
+    <!--to specify this are a user's posts and their number-->
+    <h1 class="mb-3">Posts by {{ view.kwargs.username }} ({{ page_obj.paginator.count }})</h1>
+    {% for post in posts  %}
+    <article class="media content-section">
+        <img src="{{ post.author.profile.image.url }}" alt="dp" class="rounded-circle account-img">
+        <!--to authors add dp image alongside post-->
+        <div class="media-body">
+            <div class="article-metadata">
+                <a class="mr-2" href="{% url 'user-posts' post.author.username %}">{{ post.author }}</a>
+                <small class="text-muted">{{ post.date_posted|date:"F d, Y" }}</small>
+                <!--use template filters from django doc to display date in format I want-->
+            </div>
+            <h2><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h2>
+            <!-- makes title of each post a link to its detail page-->
+            <p class="article-content">{{ post.content }}</p>
+        </div>
+    </article>
+    {% endfor %}
+    <!--to add pagination-->
+    <!--we first check to see if page has pagination which we added using ListView's paginate_by property-->
+    {% if is_paginated %}
+    <!--if page has previous pages we add links to the first page and the previous page-->
+    {% if page_obj.has_previous %}
+    <a href="?page=1" class="btn btn-outline-info mb-4">First</a>
+    <a href="?page={{ page_obj.previous_page_number }}" class="btn btn-outline-info mb-4">Previous</a>
+
+    {% endif %}
+    <!--to display current page plus pages around current page-->
+    {% for num in page_obj.paginator.page_range %}
+    <!--check to verify if we are at current page-->
+    {% if page_obj.number == num  %}
+    <a href="?page={{ num }}" class="btn btn-info mb-4">{{ num }}</a>
+    <!--to print surrounding pages we make use of filters-->
+    {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3'  %}
+    <a href="?page={{ num }}" class="btn btn-outline-info mb-4">{{ num }}</a>
+    {% endif %}
+
+    {% endfor %}
+    <!--to handle next pages has next page we add links to the next page and the last page-->
+    {% if page_obj.has_next %}
+    <a href="?page={{ page_obj.next_page_number }}" class="btn btn-outline-info mb-4">Next</a>
+    <a href="?page={{ page_obj.paginator.num_pages }}" class="btn btn-outline-info mb-4">Last</a>
+
+    {% endif %}
+
+    {% endif %}
+{% endblock content %}

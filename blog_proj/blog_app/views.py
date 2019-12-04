@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,get_object_or_404
 from .models import Post
 from django.views.generic import (ListView,
 DetailView,
@@ -7,6 +7,7 @@ UpdateView,
 DeleteView
 )
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib.auth import get_user_model
 
 
 # def home(request):
@@ -22,6 +23,20 @@ class PostListView(ListView):
     template_name='blog_app/home.html' #django default naming convention is  <app>/<model>_<viewtype>.html
     ordering = ['-date_posted'] # to order posts. since we want newest first we use -ve 
     paginate_by = 5 #Ensures we have five posts per page. pagination logic i.e to create links to other pages, we do it in  the homepage template
+
+#to return paginated posts by a user. uses user_posts.html template. filtering is done by url by specifying username
+class UserPostListView(ListView):
+    model = Post
+    context_object_name = 'posts' # tell django name we have used in our template. otherwise use django default 'object'
+    template_name='blog_app/user_posts.html' #django default naming convention is  <app>/<model>_<viewtype>.html
+    # this gets overrode by the get_queryset method so we set it there ordering = ['-date_posted'] 
+    paginate_by = 5 #Ensures we have five posts per page. pagination logic i.e to create links to other pages, we do it in  the homepage template
+
+    #to modify queryset returned by this view , we override a method get_queryset 
+    def get_queryset(self):
+        #to get user assosciated with username we shall get username from url. if user doest exist  a 404 error is raised
+        user = get_object_or_404(get_user_model(), username=self.kwargs.get('username'))# kwargs rep query parameters
+        return Post.objects.filter(author=user).order_by('-date_posted')# the overrode ordering
 
 class PostDetailView(DetailView):
     model = Post
