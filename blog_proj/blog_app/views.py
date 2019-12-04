@@ -21,7 +21,7 @@ class PostListView(ListView):
     context_object_name = 'posts' # tell django name we have used in our template. otherwise use django default 'object'
     template_name='blog_app/home.html' #django default naming convention is  <app>/<model>_<viewtype>.html
     ordering = ['-date_posted'] # to order posts. since we want newest first we use -ve 
-    paginate_by = 2 #Ensures we have two posts per page. to create links, we do it in  the homepage template
+    paginate_by = 5 #Ensures we have five posts per page. pagination logic i.e to create links to other pages, we do it in  the homepage template
 
 class PostDetailView(DetailView):
     model = Post
