@@ -28,6 +28,9 @@ urlpatterns = [
     path('login/', auth_views.LoginView.as_view(template_name='users/login.html'), name='login'),
     path('logout/', auth_views.LogoutView.as_view(template_name='users/logout.html'), name='logout'),
     path('profile/', user_views.profile, name='profile'),
+    #Add password  reset for our users
+    path('password-reset/', auth_views.PasswordResetView.as_view(template_name='users/password_reset.html'), name='password-reset'),
+    #this route provides a form for our user to fill out that will send a password reset instruction to their email.
 ]
 
 #from django docs- handling of static files in development
