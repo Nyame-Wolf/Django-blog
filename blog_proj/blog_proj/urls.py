@@ -33,7 +33,10 @@ urlpatterns = [
     #this route provides a form for our user to fill out that will send a password reset instruction to their email.
     path('password-reset/done/', auth_views.PasswordResetDoneView.as_view(template_name='users/password_reset_done.html'), name='password_reset_done'),
     #route that once password-reset is submitted successfully confirms that the email has been sent and instructs user to check inbox
-
+    path('password-reset-confirm/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(template_name='users/password_reset_confirm.html'), name='password_reset_confirm'),
+    #uidb64 is the user's ID encoded in base64
+    #token checks whether the pword is valid
+    #the two are required since view is expecting them
      
 
 ]
