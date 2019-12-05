@@ -134,3 +134,14 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4' # Ensures we use bootstrap4. the default is 
 LOGIN_REDIRECT_URL = 'blog-home'# redirects users to homepage on login instea of django default-to their profile.
 
 LOGIN_URL = 'login' # this tells django where to redirect a user who tries to access a profile page and is not logged in.
+
+#setting up email reset
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+#Use environment variables to avoid people getting access to our emails
+EMAIL_HOST_USER = os.environ.get('EMAIL_USER')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASS')
+
+
