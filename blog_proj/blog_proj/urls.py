@@ -37,6 +37,7 @@ urlpatterns = [
     #uidb64 is the user's ID encoded in base64
     #token checks whether the pword is valid
     #the two are required since view is expecting them
+    path('password-reset-complete/', auth_views.PasswordResetCompleteView.as_view(template_name='users/password_reset_complete.html'), name='password_reset_complete'),
      
 
 ]
