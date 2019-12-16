@@ -1,0 +1,26 @@
+<!--we copy home.html and refactor-->
+{% extends "blog_app/base.html" %}
+{% load crispy_forms_tags %}<!--enables us use bootstrap through crispy -->
+{% block title %}Share Post{% endblock title %}
+
+{% block content %}
+    {% if sent %}
+        <h1>Email successfully sent</h1>
+        <p>
+            "{{ post.title }}" was successfully sent to {{ form.cleaned_data.to }}.
+        </p>
+    
+    {% else %}
+        <h1>Share "{{ post.title}}" by email?</h1>
+        <form action="" method="POST">
+            {% csrf_token %}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Share Post by Email?</legend>
+                {{ form|crispy }}
+            </fieldset>
+            <div class="form-group">
+                <button class="btn btn-outline-info" type="submit">Send Email</button>               
+            </div>
+        </form>
+    {% endif %}
+{% endblock content %}
