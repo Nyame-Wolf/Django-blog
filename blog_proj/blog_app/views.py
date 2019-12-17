@@ -51,7 +51,7 @@ class PostDetailView(DetailView):
         return context
 
 def post_detail(request, pk):
-    post = get_object_or_404(Post, pk)
+    post = get_object_or_404(Post, pk=pk)
 
     # List of active comments for this post
     comments = post.comments.filter(active=True)
@@ -60,7 +60,7 @@ def post_detail(request, pk):
     # and therefore, we initialize it
     new_comment = None   
 
-    if request.method == 'Post':
+    if request.method == 'POST':
         #A comment was posted
         comment_form = CommentForm(data=request.POST)
         if comment_form.is_valid():

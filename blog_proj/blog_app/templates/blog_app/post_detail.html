@@ -1,53 +1,3 @@
-<!-- This template conforms to django CBV defaults interms of template naming and also using `object` instead of post
-<!--copy home.html...remove for loop and refactor accodingly.-->
-{% extends "blog_app/base.html" %}
-{% block content %}
-
-<article class="media content-section">
-    <img src="{{ object.author.profile.image.url }}" alt="dp" class="rounded-circle account-img">
-    <!--to authors add dp image alongside post-->
-    <div class="media-body">
-        <div class="article-metadata">
-            <a class="mr-2" href="{% url 'user-posts' post.author.username %}">{{ object.author }}</a>
-            <small class="text-muted">{{ object.date_posted|date:"F d, Y" }}</small>
-            <!--use template filters from django doc to display date in format I want-->
-            <!--to add links(buttons) to delete and update individual posts -->>
-            {% if object.author == user %}
-            <a href="{% url 'post-update' object.id %}" class="btn btn-secondary btn-sm mt-1 mb-1">Update</a>
-            <a href="{% url 'post-delete' object.id %}" class="btn btn-danger bt-sm mt-1 mb-1">Delete</a>
-            {% endif %}
-        </div>
-        <h2 class="article-title">{{ object.title }}</h2>
-        <p class="article-content">{{ object.content }}</p>
-        <p>
-            <a href="{% url "post_share" post.id %}">
-                Share this post
-            </a>
-        </p>
-        <!--Display the total number of comments for the post-->
-        {% with comments.count as total_comments %}
-        <h2>
-            {{ total_comments }} comment {{ total_comments|pluralize }}
-        </h2>
-        {% endwith %}
-        <!--Display the list of comments-->
-        {% for comment in comments  %}
-        <small class="text-muted">
-            <div class="comment">
-                <p class="info">
-                    Comment {{ forloop.counter }} by {{ comment.name }}
-                    {{ comment.created }}
-                </p>
-            </div>
-            {% empty %}
-            <p>There are no comments yet</p>
-        </small>
-        {% endfor %}
-    </div>
-</article>
-
-{% endblock content %} -->
-
 <!--This template post is for the post_detail func view-->
 <!--copy home.html...remove for loop and refactor accodingly.-->
 {% extends "blog_app/base.html" %}
@@ -63,8 +13,8 @@
             <!--use template filters from django doc to display date in format I want-->
             <!--to add links(buttons) to delete and update individual posts -->>
             {% if post.author == user %}
-            <a href="{% url 'post-update' object.id %}" class="btn btn-secondary btn-sm mt-1 mb-1">Update</a>
-            <a href="{% url 'post-delete' object.id %}" class="btn btn-danger bt-sm mt-1 mb-1">Delete</a>
+            <a href="{% url 'post-update' post.id %}" class="btn btn-secondary btn-sm mt-1 mb-1">Update</a>
+            <a href="{% url 'post-delete' post.id %}" class="btn btn-danger bt-sm mt-1 mb-1">Delete</a>
             {% endif %}
         </div>
         <h2 class="article-title">{{ post.title }}</h2>
@@ -93,6 +43,18 @@
             <p>There are no comments yet</p>
         </small>
         {% endfor %}
+
+        <!--Display a form for users to add a new comment-->
+        {% if new_comment %}
+        <h2>Your comment has been added</h2>
+        {% else %}
+        <h2>Add a new comment</h2>
+        <form action="." method="POST">
+            {{ comment_form.as_p }}
+            {% csrf_token %}
+            <p><input type="submit" value="Add comment"></p>
+        </form>
+        {% endif %}
     </div>
 </article>
 
