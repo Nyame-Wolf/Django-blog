@@ -20,3 +20,18 @@ class Post(models.Model):
     #let django know how to find location of a specific post which allows the post creation cbv to redirect us to the new post's detail page  
      def get_absolute_url(self):
          return reverse('post-detail', kwargs={'pk':self.pk})
+
+class Comment(models.Model):
+    post = models.ForeignKey(Post, related_name='comments', on_delete=models.CASCADE)
+    name = models.CharField(max_length=25)
+    email = models.EmailField()
+    body = models.TextField()
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+    active = models.BooleanField(default=True)
+
+    class Meta:
+        ordering = ('created',)
+
+    def __str__(self):
+        return f'Comment by {self.name} on {self.post} '
