@@ -8,7 +8,7 @@ DeleteView
 )
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth import get_user_model
-from .forms import EmailPostForm
+from .forms import EmailPostForm, CommentForm
 from django.core.mail import send_mail
 
 
@@ -42,6 +42,41 @@ class UserPostListView(ListView):
 
 class PostDetailView(DetailView):
     model = Post
+    form_class = CommentForm
+
+    #Add a comment to a post
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['comments'] = self.object.comments.all()
+        return context
+
+def post_detail(request, pk):
+    post = get_object_or_404(Post, pk)
+
+    # List of active comments for this post
+    comments = post.comments.filter(active=True)
+
+    #We also use the same view to let our users add a new comment,
+    # and therefore, we initialize it
+    new_comment = None   
+
+    if request.method == 'Post':
+        #A comment was posted
+        comment_form = CommentForm(data=request.POST)
+        if comment_form.is_valid():
+            #Create a comment object but don't save it to db yet
+            new_comment = comment_form.save(commit=False)
+            #Assign the current post to the comment
+            new_comment.post = post
+            #Save the comment to db
+            new_comment.save()
+    else:
+        comment_form = CommentForm()
+    return render(request, 'blog_app/post_detail.html',{'post':post,
+                                                        'comments':comments,
+                                                        'new_comment':new_comment,
+                                                        'comment_form':comment_form})
+
 
 #LoginRequired mixin requires that a user must be an account holder to create a post. Redirects logged out users to login page
 class PostCreateView(LoginRequiredMixin, CreateView):
