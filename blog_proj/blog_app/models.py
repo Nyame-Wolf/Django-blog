@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.utils import timezone
 from django.urls import reverse
+from taggit.managers import TaggableManager
 
 # create a custom user as recommended by django doc 
 class CustomUser(AbstractUser):
@@ -12,6 +13,11 @@ class Post(models.Model):
      content = models.TextField()
      date_posted = models.DateTimeField(default=timezone.now)
      author = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+
+     tags = TaggableManager()
+
+     class Meta:
+          ordering = ['-date_posted'] # to order posts. since we want newest first we use -ve
      
      # make the post object more descriptive
      def __str__(self):

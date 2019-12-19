@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'taggit', # adds a tag 3rd party app
     'crispy_forms', # loads crispy forms
     'users.apps.UsersConfig', # loads the users app.
     'blog_app.apps.BlogAppConfig', # loads the blog_app app.

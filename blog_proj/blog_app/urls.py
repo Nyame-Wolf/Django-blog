@@ -9,8 +9,9 @@ PostDeleteView,
 UserPostListView)
 
 urlpatterns = [
-    #path('',views.home, name='blog-home'),
-    path('',PostListView.as_view(), name='blog-home'),
+    path('',views.home, name='blog-home'),
+    path('tag/<slug:tag_slug>/',views.home, name='post_list_by_tag'),
+    #path('',PostListView.as_view(), name='blog-home'),
     path('user/<str:username>/',UserPostListView.as_view(), name='user-posts'),
     #path('post/<int:pk>/',PostDetailView.as_view(), name='post-detail'), # contains a variable pk-stands for priamry key which heplps access a specific post
     path('post/<int:pk>/',views.post_detail, name='post-detail'),

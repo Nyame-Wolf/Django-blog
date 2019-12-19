@@ -1,5 +1,5 @@
 from django.shortcuts import render,get_object_or_404
-from .models import Post
+from .models import Post, Comment
 from django.views.generic import (ListView,
 DetailView,
 CreateView,
@@ -10,20 +10,32 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth import get_user_model
 from .forms import EmailPostForm, CommentForm
 from django.core.mail import send_mail
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
-# def home(request):
-#     context = {
-#         'posts': Post.objects.all()
-#         }
-#     return render(request, 'blog_app/home.html', context)
+def home(request):
+    object_list = Post.objects.all()
+          
+    paginator = Paginator(object_list, 5) 
+    page = request.GET.get('page')
+    plist = paginator.get_page(page) 
+    try:
+        posts = paginator.page('page')
+    except PageNotAnInteger:
+        #if page is not an integer deliver the first page
+        posts = paginator.page(1)
+    except EmptyPage:
+        #if page is out of range deliver last page of results
+        posts = paginator.page(paginator.num_pages)
+    
+    return render(request, 'blog_app/home.html',{'plist': plist})
 
 #refactor the above home view func as a CBV.
 class PostListView(ListView):
     model = Post
     context_object_name = 'posts' # tell django name we have used in our template. otherwise use django default 'object'
     template_name='blog_app/home.html' #django default naming convention is  <app>/<model>_<viewtype>.html
-    ordering = ['-date_posted'] # to order posts. since we want newest first we use -ve 
+    #ordering = ['-date_posted'] # to order posts. since we want newest first we use -ve  if not included as a meta in model
     paginate_by = 5 #Ensures we have five posts per page. pagination logic i.e to create links to other pages, we do it in  the homepage template
 
 #to return paginated posts by a user. uses user_posts.html template. filtering is done by url by specifying username
