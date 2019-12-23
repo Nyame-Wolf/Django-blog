@@ -12,10 +12,17 @@ from django.contrib.auth import get_user_model
 from .forms import EmailPostForm, CommentForm
 from django.core.mail import send_mail
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from taggit.models import Tag
 
 
-def home(request):
+def home(request, tag_slug=None):
     object_list = Post.objects.all()
+
+    tag = None
+
+    if tag_slug:
+        tag = get_object_or_404(Tag, slug=tag_slug)
+        object_list = object_list.filter(tags__in=[tag])
 
     paginator = Paginator(object_list, 5)
     page = request.GET.get("page")
@@ -29,16 +36,23 @@ def home(request):
         # if page is out of range deliver last page of results
         posts = paginator.page(paginator.num_pages)
 
-    return render(request, "blog_app/home.html", {"posts": posts})
+    return render(
+        request, "blog_app/home.html", {"posts": posts, "page": page, "tag": tag}
+    )
 
 
 # refactor the above home view func as a CBV.
 class PostListView(ListView):
     model = Post
-    context_object_name = "posts"  # tell django name we have used in our template. otherwise use django default 'object'
-    template_name = "blog_app/home.html"  # django default naming convention is  <app>/<model>_<viewtype>.html
-    # ordering = ['-date_posted'] # to order posts. since we want newest first we use -ve  if not included as a meta in model
-    paginate_by = 5  # Ensures we have five posts per page. pagination logic i.e to create links to other pages, we do it in  the homepage template
+    context_object_name = "posts"  # tell django name we have used in
+    # our template. otherwise use django default 'object'
+    template_name = "blog_app/home.html"  # django default naming convention is
+    # <app>/<model>_<viewtype>.html
+    # ordering = ['-date_posted'] # to order posts. since we want newest
+    # first we use -ve  if not included as a meta in model
+    paginate_by = 5  # Ensures we have five posts per page. pagination
+    # logic i.e to create links to other pages, we do it in  the homepage
+    # template
 
 
 # to return paginated posts by a user. uses user_posts.html template. filtering is done by url by specifying username
