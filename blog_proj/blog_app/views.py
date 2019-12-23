@@ -18,7 +18,7 @@ def home(request):
           
     paginator = Paginator(object_list, 5) 
     page = request.GET.get('page')
-    plist = paginator.get_page(page) 
+    posts = paginator.get_page(page) 
     try:
         posts = paginator.page('page')
     except PageNotAnInteger:
@@ -28,7 +28,7 @@ def home(request):
         #if page is out of range deliver last page of results
         posts = paginator.page(paginator.num_pages)
     
-    return render(request, 'blog_app/home.html',{'plist': plist})
+    return render(request, 'blog_app/home.html',{'posts': posts})
 
 #refactor the above home view func as a CBV.
 class PostListView(ListView):
