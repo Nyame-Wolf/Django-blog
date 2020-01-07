@@ -8,3 +8,9 @@ register = template.Library()
 def total_posts():
     return Post.objects.count()
 
+
+@register.inclusion_tag("blog_app/latest_posts.html")
+def show_latest_posts(count=5):
+    latest_posts = Post.objects.order_by("-date_posted")[:count]
+    return {"latest_posts": latest_posts}
+
