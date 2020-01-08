@@ -20,67 +20,70 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '1@(b@!phw0u=+=5^8lw0@(bjxw6c%%4@-e^#!hkx)!()2lnnvu'
+SECRET_KEY = "1@(b@!phw0u=+=5^8lw0@(bjxw6c%%4@-e^#!hkx)!()2lnnvu"
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = []
 
+SITE_ID = 1
 
 # Application definition
 
 INSTALLED_APPS = [
-    'taggit', # adds a tag 3rd party app
-    'crispy_forms', # loads crispy forms
-    'users.apps.UsersConfig', # loads the users app.
-    'blog_app.apps.BlogAppConfig', # loads the blog_app app.
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
+    "taggit",  # adds a tag 3rd party app
+    "crispy_forms",  # loads crispy forms
+    "users.apps.UsersConfig",  # loads the users app.
+    "blog_app.apps.BlogAppConfig",  # loads the blog_app app.
+    "django.contrib.admin",
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
+    "django.contrib.messages",
+    "django.contrib.staticfiles",
+    "django.contrib.sites",
+    "django.contrib.sitemaps",
 ]
 
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "django.middleware.security.SecurityMiddleware",
+    "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.common.CommonMiddleware",
+    "django.middleware.csrf.CsrfViewMiddleware",
+    "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "django.contrib.messages.middleware.MessageMiddleware",
+    "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-ROOT_URLCONF = 'blog_proj.urls'
+ROOT_URLCONF = "blog_proj.urls"
 
 TEMPLATES = [
     {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
+        "BACKEND": "django.template.backends.django.DjangoTemplates",
+        "DIRS": [],
+        "APP_DIRS": True,
+        "OPTIONS": {
+            "context_processors": [
+                "django.template.context_processors.debug",
+                "django.template.context_processors.request",
+                "django.contrib.auth.context_processors.auth",
+                "django.contrib.messages.context_processors.messages",
             ],
         },
     },
 ]
 
-WSGI_APPLICATION = 'blog_proj.wsgi.application'
+WSGI_APPLICATION = "blog_proj.wsgi.application"
 
 
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
     }
 }
 
@@ -90,26 +93,20 @@ DATABASES = {
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
     },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
+    {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",},
+    {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",},
+    {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",},
 ]
 
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = "en-us"
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = "UTC"
 
 USE_I18N = True
 
@@ -121,28 +118,33 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = "/static/"
 
-MEDIA_ROOT = os.path.join(BASE_DIR,'media') #from django docs- handling of static files in development
+MEDIA_ROOT = os.path.join(
+    BASE_DIR, "media"
+)  # from django docs- handling of static files in development
 
-MEDIA_URL = '/media/'#from django docs- handling of static files in development
+MEDIA_URL = "/media/"  # from django docs- handling of static files in development
 # Above two automatically create a media dir where all pics are saved. The upload_to folder created in the models.py is saved inside this media folder. A default.jpg if present should be aded manually inside the media dir
 
-AUTH_USER_MODEL = 'blog_app.CustomUser' # We must add this for the custom user to become usable
+AUTH_USER_MODEL = (
+    "blog_app.CustomUser"  # We must add this for the custom user to become usable
+)
 
-CRISPY_TEMPLATE_PACK = 'bootstrap4' # Ensures we use bootstrap4. the default is bootstrap2
+CRISPY_TEMPLATE_PACK = (
+    "bootstrap4"  # Ensures we use bootstrap4. the default is bootstrap2
+)
 
-LOGIN_REDIRECT_URL = 'blog-home'# redirects users to homepage on login instea of django default-to their profile.
+LOGIN_REDIRECT_URL = "blog-home"  # redirects users to homepage on login instea of django default-to their profile.
 
-LOGIN_URL = 'login' # this tells django where to redirect a user who tries to access a profile page and is not logged in.
+LOGIN_URL = "login"  # this tells django where to redirect a user who tries to access a profile page and is not logged in.
 
-#setting up email reset
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
+# setting up email reset
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "smtp.gmail.com"
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-#Use environment variables to avoid people getting access to our emails
-EMAIL_HOST_USER = os.environ.get('EMAIL_USER')
-EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASS')
-
+# Use environment variables to avoid people getting access to our emails
+EMAIL_HOST_USER = os.environ.get("EMAIL_USER")
+EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_PASS")
 
