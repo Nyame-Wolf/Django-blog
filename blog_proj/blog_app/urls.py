@@ -9,6 +9,7 @@ from .views import (
     PostDeleteView,
     UserPostListView,
 )
+from .feeds import LatestPostsFeed
 
 urlpatterns = [
     path("", views.home, name="blog-home"),
@@ -22,4 +23,5 @@ urlpatterns = [
     path("post/<int:pk>/delete/", PostDeleteView.as_view(), name="post-delete"),
     path("about/", views.about, name="blog-about"),
     path("post/<int:post_id>/share/", views.post_share, name="post_share"),
+    path("feed/", LatestPostsFeed(), name="post_feed"),
 ]
